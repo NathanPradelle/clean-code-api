@@ -26,7 +26,7 @@ Ce dépôt utilise une stratégie inspirée de GitFlow :
 - `fix/*` : branches de correction (optionnel)
 - `chore/*` : maintenance/outillage (optionnel)
 
-✅ Règle : **aucun push direct sur `main` et `develop`**   
+✅ Règle : **aucun push direct sur `main` et `develop`**  
 ✅ Tout passe par des Pull Requests (PR).
 
 ## Architecture du projet
@@ -45,28 +45,33 @@ src/
 ```
 
 ### Description des dossiers
-```domain/``` — Cœur métier
+
+`domain/` — Cœur métier
 Contient la logique métier pure :
+
 - entités métier
 - value objects
 - règles métier
-Aucune dépendance à Express, à la base de données ou à des librairies techniques.
+  Aucune dépendance à Express, à la base de données ou à des librairies techniques.
 
-```application/``` — Cas d’usage
+`application/` — Cas d’usage
 Contient les use cases et les ports (interfaces) :
+
 - orchestration de la logique métier
 - définition des dépendances nécessaires (repositories, services, etc.)
-Cette couche dépend du domain mais ne dépend pas de l’infrastructure.
+  Cette couche dépend du domain mais ne dépend pas de l’infrastructure.
 
-```infrastructure/``` — Détails techniques
+`infrastructure/` — Détails techniques
 Contient les implémentations concrètes :
+
 - controllers HTTP (Express)
 - repositories (in-memory, base de données, etc.)
 - adaptateurs techniques
-Cette couche peut évoluer sans impacter le métier.
+  Cette couche peut évoluer sans impacter le métier.
 
-```main/``` — Point d’entrée / composition
+`main/` — Point d’entrée / composition
 Responsable de :
+
 - l’initialisation de l’application
 - l’assemblage des dépendances (composition root)
 - la configuration d’Express
@@ -77,13 +82,14 @@ Responsable de :
 Ce projet suit volontairement des règles strictes afin de garantir un code propre et cohérent.
 
 Règles générales:
+
 - ❌ Pas de logique métier dans les controllers
 - ❌ Pas de commentaires
 - ✅ Une responsabilité par fichier (Single Responsibility Principle)
 
 ## Nommage
 
-- Classes : PascalCase 
+- Classes : PascalCase
 - Fichiers : kebab-case.ts
 - Use cases : Verbe + Nom (ex : CreateCard)
 - Interfaces : NomDuConcept ou NomRepository
@@ -97,5 +103,6 @@ Ordre des imports strictement contrôlé par ESLint
 ## Qualité du code
 
 Avant chaque push :
+
 - npm run lint
 - npm run format
