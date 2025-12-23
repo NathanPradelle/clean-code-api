@@ -26,7 +26,7 @@ Ce dépôt utilise une stratégie inspirée de GitFlow :
 - `fix/*` : branches de correction (optionnel)
 - `chore/*` : maintenance/outillage (optionnel)
 
-✅ Règle : **aucun push direct sur `main` et `develop`**
+✅ Règle : **aucun push direct sur `main` et `develop`**   
 ✅ Tout passe par des Pull Requests (PR).
 
 ## Architecture du projet
