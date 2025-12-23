@@ -110,9 +110,7 @@ export const getQuizzCardsController =
       const parsed = new Date(date);
 
       if (Number.isNaN(parsed.getTime())) {
-        res
-          .status(400)
-          .json({ message: 'date must be a valid ISO date (yyyy-mm-dd)' });
+        res.status(400).json({ message: 'date must be a valid ISO date (yyyy-mm-dd)' });
         return;
       }
 
