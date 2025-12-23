@@ -38,6 +38,5 @@ describe('ListOwnerCards use case', () => {
     expect(card.question).toBe('Q1');
     expect(card.answer).toBe('A1');
     expect(card.tag).toBe('Tag1');
-
-    });
+  });
 });

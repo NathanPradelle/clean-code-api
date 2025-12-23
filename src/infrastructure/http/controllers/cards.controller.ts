@@ -5,7 +5,6 @@ import { ListOwnerCards } from '@/application/use-cases/list-owner-cards/ListOwn
 import { Card } from '@/domain/card/Card';
 import { toApiCard } from '@/infrastructure/http/mappers/card.mapper';
 
-
 const DEFAULT_OWNER_ID = 'default-owner';
 
 export const createCardsController =
