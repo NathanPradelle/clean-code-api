@@ -9,7 +9,7 @@ import {
 } from '@/infrastructure/http/controllers/cards.controller';
 import { healthCheck } from '@/infrastructure/http/controllers/health.controller';
 
-const app = express();
+export const app = express();
 
 app.use(cors());
 app.use(express.json());
