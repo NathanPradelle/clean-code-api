@@ -6,7 +6,6 @@ import { CreateCardResult } from './CreateCardResult';
 import { CardRepository } from '@/application/ports/CardRepository';
 import { Card } from '@/domain/card/Card';
 
-
 const DEFAULT_OWNER_ID = 'default-owner';
 
 export class CreateCard {
