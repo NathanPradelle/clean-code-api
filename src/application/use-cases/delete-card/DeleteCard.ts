@@ -1,6 +1,7 @@
-import { CardRepository } from '@/application/ports/CardRepository';
 import { DeleteCardCommand } from './DeleteCardCommand';
 import { DeleteCardResult } from './DeleteCardResult';
+
+import { CardRepository } from '@/application/ports/CardRepository';
 
 export class DeleteCard {
   constructor(private readonly cardRepo: CardRepository) {}

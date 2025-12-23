@@ -1,6 +1,7 @@
-import { CardRepository } from '@/application/ports/CardRepository';
 import { ListOwnerCardsCommand } from './ListOwnerCardsCommand';
 import { ListOwnerCardsResult } from './ListOwnerCardsResult';
+
+import { CardRepository } from '@/application/ports/CardRepository';
 
 export class ListOwnerCards {
   constructor(private readonly cardRepo: CardRepository) {}

@@ -19,9 +19,7 @@ export class InMemoryCardRepository implements CardRepository {
 
   async findDueByOwnerId(ownerId: string, at: Date): Promise<Card[]> {
     const all = Array.from(this.cards.values());
-    return all.filter(
-      (c) => c.toPrimitives().ownerId === ownerId && c.isDueAt(at),
-    );
+    return all.filter((c) => c.toPrimitives().ownerId === ownerId && c.isDueAt(at));
   }
 
   async deleteById(id: string): Promise<void> {

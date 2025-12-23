@@ -1,6 +1,7 @@
-import { CardRepository } from '@/application/ports/CardRepository';
 import { UpdateCardCommand } from './UpdateCardCommand';
 import { UpdateCardResult } from './UpdateCardResult';
+
+import { CardRepository } from '@/application/ports/CardRepository';
 
 export class UpdateCard {
   constructor(private readonly cardRepo: CardRepository) {}

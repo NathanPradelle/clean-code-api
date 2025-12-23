@@ -7,10 +7,7 @@ export class GetDueCards {
   constructor(private readonly cardRepo: CardRepository) {}
 
   async execute(command: GetDueCardsCommand): Promise<GetDueCardsResult> {
-    const cards = await this.cardRepo.findDueByOwnerId(
-      command.ownerId,
-      command.at,
-    );
+    const cards = await this.cardRepo.findDueByOwnerId(command.ownerId, command.at);
 
     return {
       cards: cards.map((card) => {

@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
+
 import { CreateCard } from '@/application/use-cases/create-card/CreateCard';
 import { ListOwnerCards } from '@/application/use-cases/list-owner-cards/ListOwnerCards';
-import { toApiCard } from '@/infrastructure/http/mappers/card.mapper';
 import { Card } from '@/domain/card/Card';
+import { toApiCard } from '@/infrastructure/http/mappers/card.mapper';
+
 
 const DEFAULT_OWNER_ID = 'default-owner';
 
@@ -57,11 +59,7 @@ export const getCardsController =
         .filter((t) => t.length > 0);
     } else if (Array.isArray(rawTags)) {
       tags = rawTags
-        .flatMap((value) =>
-          typeof value === 'string'
-            ? value.split(',')
-            : [],
-        )
+        .flatMap((value) => (typeof value === 'string' ? value.split(',') : []))
         .map((t) => t.trim())
         .filter((t) => t.length > 0);
     }
