@@ -11,7 +11,7 @@ import {
 } from '@/infrastructure/http/controllers/cards.controller';
 import { healthCheck } from '@/infrastructure/http/controllers/health.controller';
 
-export const app = express();
+const app = express();
 
 app.use(cors());
 app.use(express.json());
@@ -29,3 +29,5 @@ const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 app.listen(port, () => {
   console.log(`API listening on http://localhost:${port}`);
 });
+
+export { app };
