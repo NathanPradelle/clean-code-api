@@ -80,7 +80,6 @@ describe('Cards HTTP API', () => {
 });
 
 describe('Answer card e2e', () => {
-
   it('accepts a valid answer and returns 204', async () => {
     const createRes = await request(app).post('/cards').send({
       question: 'Q',
@@ -89,17 +88,13 @@ describe('Answer card e2e', () => {
 
     const cardId = createRes.body.id;
 
-    const res = await request(app)
-      .patch(`/cards/${cardId}/answer`)
-      .send({ isValid: true });
+    const res = await request(app).patch(`/cards/${cardId}/answer`).send({ isValid: true });
 
     expect(res.status).toBe(204);
   });
 
   it('returns 404 when answering an unknown card', async () => {
-    const res = await request(app)
-      .patch('/cards/unknown-id/answer')
-      .send({ isValid: true });
+    const res = await request(app).patch('/cards/unknown-id/answer').send({ isValid: true });
 
     expect(res.status).toBe(404);
   });
@@ -112,9 +107,7 @@ describe('Answer card e2e', () => {
 
     const cardId = createRes.body.id;
 
-    const res = await request(app)
-      .patch(`/cards/${cardId}/answer`)
-      .send({});
+    const res = await request(app).patch(`/cards/${cardId}/answer`).send({});
 
     expect(res.status).toBe(400);
   });
@@ -127,13 +120,9 @@ describe('Answer card e2e', () => {
 
     const cardId = createRes.body.id;
 
-    await request(app)
-      .patch(`/cards/${cardId}/answer`)
-      .send({ isValid: true });
+    await request(app).patch(`/cards/${cardId}/answer`).send({ isValid: true });
 
-    await request(app)
-      .patch(`/cards/${cardId}/answer`)
-      .send({ isValid: false });
+    await request(app).patch(`/cards/${cardId}/answer`).send({ isValid: false });
 
     const res = await request(app).get('/cards');
 
