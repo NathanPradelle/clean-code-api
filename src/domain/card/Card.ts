@@ -99,6 +99,13 @@ export class Card {
     return !!this.props.archivedAt;
   }
 
+  isDueAt(date: Date = new Date()): boolean {
+    if (this.isArchived) {
+      return false;
+    }
+    return this.props.nextReviewAt.getTime() <= date.getTime();
+  }
+
   answerCorrect(now: Date = new Date()): void {
     if (this.isArchived) {
       return;
