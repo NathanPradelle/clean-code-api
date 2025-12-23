@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 
+import { AnswerCard } from '@/application/use-cases/answer-card/AnswerCard';
 import { CreateCard } from '@/application/use-cases/create-card/CreateCard';
+import { GetDueCards } from '@/application/use-cases/get-due-cards/GetDueCards';
 import { ListOwnerCards } from '@/application/use-cases/list-owner-cards/ListOwnerCards';
 import { Card } from '@/domain/card/Card';
 import { toApiCard } from '@/infrastructure/http/mappers/card.mapper';
@@ -96,4 +98,80 @@ export const getCardsController =
       );
 
     res.status(200).json(cards);
+  };
+
+export const getQuizzCardsController =
+  (getDueCards: GetDueCards) => async (req: Request, res: Response) => {
+    const { date } = req.query;
+
+    let at: Date;
+
+    if (typeof date === 'string' && date.trim().length > 0) {
+      const parsed = new Date(date);
+
+      if (Number.isNaN(parsed.getTime())) {
+        res.status(400).json({ message: 'date must be a valid ISO date (yyyy-mm-dd)' });
+        return;
+      }
+
+      at = parsed;
+    } else if (date === undefined) {
+      at = new Date();
+    } else {
+      res.status(400).json({ message: 'date must be a string if provided' });
+      return;
+    }
+
+    const result = await getDueCards.execute({
+      ownerId: DEFAULT_OWNER_ID,
+      at,
+    });
+
+    const cards = result.cards.map((cardProps) =>
+      toApiCard(
+        Card.restore({
+          id: cardProps.id,
+          ownerId: cardProps.ownerId,
+          question: cardProps.question,
+          answer: cardProps.answer,
+          tag: undefined,
+          boxLevel: cardProps.boxLevel,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          lastAnsweredAt: undefined,
+          nextReviewAt: cardProps.nextReviewAt,
+          archivedAt: cardProps.isArchived ? new Date() : undefined,
+        }),
+      ),
+    );
+
+    res.status(200).json(cards);
+  };
+
+export const answerCardController =
+  (answerCard: AnswerCard) => async (req: Request, res: Response) => {
+    const { cardId } = req.params;
+    const { isValid } = req.body ?? {};
+
+    if (!cardId) {
+      res.status(400).json({ message: 'cardId is required' });
+      return;
+    }
+
+    if (typeof isValid !== 'boolean') {
+      res.status(400).json({ message: 'isValid must be a boolean' });
+      return;
+    }
+
+    const ok = await answerCard.execute({
+      cardId,
+      isValid,
+    });
+
+    if (!ok) {
+      res.status(404).json({ message: 'Card not found' });
+      return;
+    }
+
+    res.status(204).send();
   };
