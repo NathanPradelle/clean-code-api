@@ -7,6 +7,7 @@ export interface CardProps {
   ownerId: string;
   question: string;
   answer: string;
+  tag?: string;
   boxLevel: BoxLevel;
   createdAt: Date;
   updatedAt: Date;
@@ -20,6 +21,7 @@ export interface CreateCardParams {
   ownerId: string;
   question: string;
   answer: string;
+  tag?: string;
 }
 
 export class Card {
@@ -28,6 +30,7 @@ export class Card {
   static createNew(params: CreateCardParams, now: Date = new Date()): Card {
     const question = params.question?.trim();
     const answer = params.answer?.trim();
+    const tag = params.tag?.trim();
 
     if (!params.ownerId || typeof params.ownerId !== 'string') {
       throw new Error('ownerId is required');
@@ -46,6 +49,7 @@ export class Card {
       ownerId: params.ownerId,
       question,
       answer,
+      tag: tag || undefined,
       boxLevel: 1,
       createdAt: now,
       updatedAt: now,
@@ -73,6 +77,10 @@ export class Card {
 
   get answer(): string {
     return this.props.answer;
+  }
+
+  get tag(): string | undefined {
+    return this.props.tag;
   }
 
   get boxLevel(): BoxLevel {
@@ -137,6 +145,25 @@ export class Card {
 
   forceValidate(now: Date = new Date()): void {
     this.answerCorrect(now);
+  }
+
+  updateContent(question: string, answer: string, tag?: string, now: Date = new Date()): void {
+    const q = question?.trim();
+    const a = answer?.trim();
+    const t = tag?.trim();
+
+    if (!q) {
+      throw new Error('question is required');
+    }
+
+    if (!a) {
+      throw new Error('answer is required');
+    }
+
+    this.props.question = q;
+    this.props.answer = a;
+    this.props.tag = t || undefined;
+    this.props.updatedAt = now;
   }
 
   private static computeNextReviewAt(level: BoxLevel, from: Date): Date {

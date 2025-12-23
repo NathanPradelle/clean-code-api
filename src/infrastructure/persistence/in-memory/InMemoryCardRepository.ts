@@ -23,4 +23,8 @@ export class InMemoryCardRepository implements CardRepository {
       (c) => c.toPrimitives().ownerId === ownerId && c.isDueAt(at),
     );
   }
+
+  async deleteById(id: string): Promise<void> {
+    this.cards.delete(id);
+  }
 }
