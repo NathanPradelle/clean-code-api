@@ -28,7 +28,35 @@ module.exports = [
   // Base recommended
   js.configs.recommended,
 
+  // ============================================
+  // Config pour les fichiers .js (CommonJS / Node.js)
+  // ============================================
+  {
+    files: ['**/*.js'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'commonjs', // CommonJS (require/module.exports)
+      globals: {
+        require: 'readonly',
+        module: 'readonly',
+        exports: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        process: 'readonly',
+        console: 'readonly',
+        Buffer: 'readonly',
+        setImmediate: 'readonly',
+        clearImmediate: 'readonly',
+      },
+    },
+    rules: {
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    },
+  },
+
+  // ============================================
   // Config TS (votre code)
+  // ============================================
   {
     files: ['**/*.ts'],
     languageOptions: {
