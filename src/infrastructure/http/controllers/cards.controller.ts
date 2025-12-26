@@ -2,9 +2,8 @@ import { Request, Response } from 'express';
 
 import { AnswerCard } from '@/application/use-cases/answer-card/AnswerCard';
 import { CreateCard } from '@/application/use-cases/create-card/CreateCard';
-import { GetDueCards } from '@/application/use-cases/get-due-cards/GetDueCards';
-import { ListOwnerCards } from '@/application/use-cases/list-owner-cards/ListOwnerCards';
 import { GetQuizCards } from '@/application/use-cases/get-quiz-cards/GetQuizCards';
+import { ListOwnerCards } from '@/application/use-cases/list-owner-cards/ListOwnerCards';
 import { Card } from '@/domain/card/Card';
 import { toApiCard } from '@/infrastructure/http/mappers/card.mapper';
 
@@ -129,9 +128,7 @@ export const getQuizzCardsController =
     });
 
     if (result.alreadyCompleted) {
-      res
-        .status(400)
-        .json({ message: 'quiz already completed for this date' });
+      res.status(400).json({ message: 'quiz already completed for this date' });
       return;
     }
 

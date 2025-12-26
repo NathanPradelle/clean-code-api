@@ -1,7 +1,8 @@
+import { GetQuizCardsResult } from './GetQuizCardsResult';
+
+import { QuizSessionRepository } from '@/application/ports/QuizSessionRepository';
 import { GetDueCards } from '@/application/use-cases/get-due-cards/GetDueCards';
 import { GetDueCardsCommand } from '@/application/use-cases/get-due-cards/GetDueCardsCommand';
-import { GetQuizCardsResult } from './GetQuizCardsResult';
-import { QuizSessionRepository } from '@/application/ports/QuizSessionRepository';
 import { QuizSession } from '@/domain/quiz/QuizSession';
 
 export class GetQuizCards {
@@ -13,10 +14,7 @@ export class GetQuizCards {
   async execute(command: GetDueCardsCommand): Promise<GetQuizCardsResult> {
     const dateKey = this.toDateKey(command.at);
 
-    const existing = await this.quizSessionRepo.findByOwnerIdAndDate(
-      command.ownerId,
-      dateKey,
-    );
+    const existing = await this.quizSessionRepo.findByOwnerIdAndDate(command.ownerId, dateKey);
 
     if (existing) {
       return {
