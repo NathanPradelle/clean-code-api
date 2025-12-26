@@ -127,7 +127,7 @@ describe('Card domain', () => {
       boxLevel: 6 as BoxLevel,
       createdAt,
       updatedAt: createdAt,
-     lastAnsweredAt: createdAt,
+      lastAnsweredAt: createdAt,
       nextReviewAt: createdAt,
       archivedAt: undefined,
     };

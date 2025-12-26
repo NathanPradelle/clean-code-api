@@ -1,13 +1,13 @@
 import { AnswerCard } from '@/application/use-cases/answer-card/AnswerCard';
 import { CreateCard } from '@/application/use-cases/create-card/CreateCard';
 import { GetDueCards } from '@/application/use-cases/get-due-cards/GetDueCards';
-import { ListOwnerCards } from '@/application/use-cases/list-owner-cards/ListOwnerCards';
 import { GetQuizCards } from '@/application/use-cases/get-quiz-cards/GetQuizCards';
+import { ListOwnerCards } from '@/application/use-cases/list-owner-cards/ListOwnerCards';
 import { SetDailyQuizReminder } from '@/application/use-cases/set-daily-quiz-reminder/SetDailyQuizReminder';
-import { InMemoryCardRepository } from '@/infrastructure/persistence/in-memory/InMemoryCardRepository';
-import { InMemoryQuizSessionRepository } from '@/infrastructure/persistence/in-memory/InMemoryQuizSessionRepository';
-import { InMemoryNotificationPreferenceRepository } from '@/infrastructure/persistence/in-memory/InMemoryNotificationPreferenceRepository';
 import { ConsoleNotificationScheduler } from '@/infrastructure/persistence/in-memory/ConsoleNotificationScheduler';
+import { InMemoryCardRepository } from '@/infrastructure/persistence/in-memory/InMemoryCardRepository';
+import { InMemoryNotificationPreferenceRepository } from '@/infrastructure/persistence/in-memory/InMemoryNotificationPreferenceRepository';
+import { InMemoryQuizSessionRepository } from '@/infrastructure/persistence/in-memory/InMemoryQuizSessionRepository';
 
 export const createDeps = () => {
   const cardRepository = new InMemoryCardRepository();
