@@ -4,6 +4,7 @@ import { AnswerCard } from '@/application/use-cases/answer-card/AnswerCard';
 import { CreateCard } from '@/application/use-cases/create-card/CreateCard';
 import { GetDueCards } from '@/application/use-cases/get-due-cards/GetDueCards';
 import { ListOwnerCards } from '@/application/use-cases/list-owner-cards/ListOwnerCards';
+import { GetQuizCards } from '@/application/use-cases/get-quiz-cards/GetQuizCards';
 import { Card } from '@/domain/card/Card';
 import { toApiCard } from '@/infrastructure/http/mappers/card.mapper';
 
@@ -101,7 +102,7 @@ export const getCardsController =
   };
 
 export const getQuizzCardsController =
-  (getDueCards: GetDueCards) => async (req: Request, res: Response) => {
+  (getQuizCards: GetQuizCards) => async (req: Request, res: Response) => {
     const { date } = req.query;
 
     let at: Date;
@@ -122,10 +123,17 @@ export const getQuizzCardsController =
       return;
     }
 
-    const result = await getDueCards.execute({
+    const result = await getQuizCards.execute({
       ownerId: DEFAULT_OWNER_ID,
       at,
     });
+
+    if (result.alreadyCompleted) {
+      res
+        .status(400)
+        .json({ message: 'quiz already completed for this date' });
+      return;
+    }
 
     const cards = result.cards.map((cardProps) =>
       toApiCard(
