@@ -113,6 +113,36 @@ describe('Card domain', () => {
     expect(diffMs).toBe(64 * 24 * 60 * 60 * 1000);
   });
 
+  it('reaches box 7 on correct answer but does not archive until another correct answer in box 7', () => {
+    const createdAt = new Date('2025-01-01T00:00:00.000Z');
+    const firstCorrect = new Date('2025-01-10T00:00:00.000Z');
+    const secondCorrect = new Date('2025-03-20T00:00:00.000Z');
+
+    const props: CardProps = {
+      id: 'card-1',
+      ownerId: 'user-1',
+      question: 'Q',
+      answer: 'A',
+      tag: 'Tag',
+      boxLevel: 6 as BoxLevel,
+      createdAt,
+      updatedAt: createdAt,
+     lastAnsweredAt: createdAt,
+      nextReviewAt: createdAt,
+      archivedAt: undefined,
+    };
+
+    const card = Card.restore(props);
+
+    card.answerCorrect(firstCorrect);
+    expect(card.boxLevel).toBe(7);
+    expect(card.isArchived).toBe(false);
+
+    card.answerCorrect(secondCorrect);
+    expect(card.boxLevel).toBe(7);
+    expect(card.isArchived).toBe(true);
+  });
+
   it('resets to box 1 on wrong answer', () => {
     const createdAt = new Date('2025-01-01T00:00:00.000Z');
     const answerDate = new Date('2025-01-05T00:00:00.000Z');
