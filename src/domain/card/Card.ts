@@ -120,16 +120,20 @@ export class Card {
     }
 
     const currentLevel = this.props.boxLevel;
-    const nextLevel = Math.min(currentLevel + 1, 7) as BoxLevel;
+    if (currentLevel === 7) {
+      this.props.lastAnsweredAt = now;
+      this.props.updatedAt = now;
+      this.props.nextReviewAt = Card.computeNextReviewAt(7, now);
+      this.props.archivedAt = now;
+      return;
+    }
+
+    const nextLevel = Math.min((currentLevel + 1) as number, 7) as BoxLevel;
 
     this.props.boxLevel = nextLevel;
     this.props.lastAnsweredAt = now;
     this.props.updatedAt = now;
     this.props.nextReviewAt = Card.computeNextReviewAt(nextLevel, now);
-
-    if (nextLevel === 7) {
-      this.props.archivedAt = now;
-    }
   }
 
   answerWrong(now: Date = new Date()): void {
