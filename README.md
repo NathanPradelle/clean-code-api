@@ -14,6 +14,7 @@ git clone https://github.com/NathanPradelle/clean-code-api.git
 cd clean-code-api
 npm install
 npm run dev
+npm run tets (pour les tests)
 ```
 
 ## Branching strategy
