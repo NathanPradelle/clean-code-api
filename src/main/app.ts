@@ -21,7 +21,7 @@ const deps = createDeps();
 app.get('/health', healthCheck);
 app.post('/cards', createCardsController(deps.createCard));
 app.get('/cards', getCardsController(deps.listOwnerCards));
-app.get('/cards/quizz', getQuizzCardsController(deps.getDueCards));
+app.get('/cards/quizz', getQuizzCardsController(deps.getQuizCards));
 app.patch('/cards/:cardId/answer', answerCardController(deps.answerCard));
 
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
