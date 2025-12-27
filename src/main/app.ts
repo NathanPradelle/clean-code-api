@@ -18,10 +18,8 @@ const app = express();
 // MIDDLEWARES
 // ============================================
 
-// Parser JSON dans les requêtes
 app.use(express.json());
 
-// CORS pour autoriser React (localhost:5173)
 app.use(
   cors({
     origin: 'http://localhost:5173',
@@ -33,24 +31,19 @@ app.use(
 // INJECTION DE DÉPENDANCES
 // ============================================
 
-// Crée tous les use cases avec MySQL !
 const deps = createDeps();
 
 // ============================================
 // ROUTES - CONFORME AU CONTRAT OPENAPI
 // ============================================
 
-// Health check (pas dans OpenAPI, on le garde)
 app.get('/health', healthCheck);
 
-// Cards
 app.get('/cards', getCardsController(deps.listOwnerCards));
 app.post('/cards', createCardsController(deps.createCard));
 
-// Learning (Quiz avec 2 z comme dans OpenAPI)
 app.get('/cards/quizz', getQuizzCardsController(deps.getQuizCards));
 
-// Answer (PATCH comme dans OpenAPI)
 app.patch('/cards/:cardId/answer', answerCardController(deps.answerCard));
 
 // ============================================

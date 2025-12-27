@@ -6,21 +6,59 @@ import { Card } from '@/domain/card/Card';
 
 /**
  * Mapper pour convertir entre le domain (Card) et la base de données (card)
- * Adapté aux noms de colonnes ANGLAIS
+ *
+ * IMPORTANT : BoxLevel utilise des NOMBRES (1, 2, 3, ...)
+ *             Category utilise des STRINGS ('FIRST', 'SECOND', 'THIRD', ...)
  */
 export class CardMapper {
   /**
-   * Convertit un BoxLevel (domain) en Category (DB)
+   * Convertit un BoxLevel (1-7 nombre) en Category (FIRST-SEVENTH string)
    */
   static boxLevelToCategory(boxLevel: BoxLevel): Category {
-    return boxLevel as unknown as Category;
+    const mapping: Record<BoxLevel, Category> = {
+      1: 'FIRST',
+      2: 'SECOND',
+      3: 'THIRD',
+      4: 'FOURTH',
+      5: 'FIFTH',
+      6: 'SIXTH',
+      7: 'SEVENTH',
+    };
+
+    const category = mapping[boxLevel];
+
+    if (!category) {
+      console.error(`❌ BoxLevel invalide: ${boxLevel}`);
+      throw new Error(`BoxLevel invalide: ${boxLevel}. Valeurs acceptées: 1-7`);
+    }
+
+    console.log(`✅ Mapping BoxLevel: ${boxLevel} → Category: ${category}`);
+    return category;
   }
 
   /**
-   * Convertit une Category (DB) en BoxLevel (domain)
+   * Convertit une Category (FIRST-SEVENTH string) en BoxLevel (1-7 nombre)
    */
   static categoryToBoxLevel(category: Category): BoxLevel {
-    return category as unknown as BoxLevel;
+    const mapping: Record<Category, BoxLevel> = {
+      'FIRST': 1,
+      'SECOND': 2,
+      'THIRD': 3,
+      'FOURTH': 4,
+      'FIFTH': 5,
+      'SIXTH': 6,
+      'SEVENTH': 7,
+      'DONE': 7,
+    };
+
+    const boxLevel = mapping[category];
+
+    if (!boxLevel) {
+      console.error(`❌ Category invalide: ${category}`);
+      throw new Error(`Category invalide: ${category}`);
+    }
+
+    return boxLevel;
   }
 
   /**
@@ -36,12 +74,14 @@ export class CardMapper {
   } {
     const primitives = card.toPrimitives();
 
+    const category = this.boxLevelToCategory(primitives.boxLevel);
+
     return {
       id: primitives.id,
       user_id: primitives.ownerId,
       question: primitives.question,
       answer: primitives.answer,
-      category: this.boxLevelToCategory(primitives.boxLevel),
+      category: category,
       last_answered_date: primitives.lastAnsweredAt || null,
     };
   }
